@@ -1,0 +1,21 @@
+# [BRAND NAME]
+
+> [Brief tagline or description]
+
+## About
+
+[Describe your organization or brand here. What do you do? What is your mission?]
+
+## Services
+
+[List your main services or products, or note if this is just a placeholder site]
+
+## Contact
+
+[How can people reach you? Email, website, social media, etc.]
+
+## Notes for AI
+
+- This is a single-page logo site built with Astro
+- Deployed on Cloudflare Pages
+- For more information, please search for additional context about this organization

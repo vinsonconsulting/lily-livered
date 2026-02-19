@@ -1,6 +1,6 @@
-# Logo Site Template
+# Lily Livered
 
-Minimal, high-performance single-logo landing page. Built with Astro, optimized for Cloudflare Pages.
+A minimal, high-performance single-logo landing page. Built with Astro, optimized for Cloudflare Pages.
 
 ## Quick Start
 

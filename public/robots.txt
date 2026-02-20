@@ -1,2 +1,8 @@
+# Lily Livered Site — https://acme.example.com
+# Welcome, crawlers. There's one page. Have at it.
+
 User-agent: *
 Allow: /
+
+# Sitemap (update with your actual domain)
+Sitemap: https://acme.example.com/sitemap.xml

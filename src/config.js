@@ -1,43 +1,32 @@
 // Site Configuration
-// Edit these values for each new site deployment
+// This is the only file you need to edit. Replace the Acme placeholder values with yours.
 
 export const config = {
-  // ===================
-  // REQUIRED - Site Info
-  // ===================
-  siteName: 'BRAND NAME',
-  siteDescription: 'Your brand description',
-  siteUrl: 'https://yourdomain.com',
+  // ◈ Site Info
+  siteName: 'Acme Corporation',
+  siteDescription: 'Fine Products for Coyotes Since 1949',
+  siteUrl: 'https://acme.example.com',
 
-  // ===================
-  // OPTIONAL - Analytics
-  // ===================
-  // Leave as empty string '' to disable any of these
-  googleAnalyticsId: '',        // e.g., 'G-XXXXXXXXXX'
-  clarityProjectId: '',         // e.g., 'abc123xyz'
-  cloudflareAnalyticsToken: '', // e.g., 'abcd1234...'
+  // ◈ Analytics — paste your IDs, or leave '' to disable
+  googleAnalyticsId: '',           // e.g., 'G-XXXXXXXXXX'
+  clarityProjectId: '',            // e.g., 'abc123xyz'
+  cloudflareAnalyticsToken: '',    // e.g., 'abcd1234...'
 
-  // ===================
-  // OPTIONAL - Appearance
-  // ===================
+  // ◈ Colors
   backgroundColor: '#000000',
   textColor: '#ffffff',
 
-  // Logo sizing - how much screen real estate?
-  // 'normal'  = min(92vw, 80vh) - good for most logos
-  // 'large'   = min(95vw, 90vh) - for logos that need more presence
-  // 'massive' = min(98vw, 95vh) - edge-to-edge, minimal padding
+  // ◈ Logo size — how much screen to fill
+  // 'normal'  → min(92vw, 80vh) — breathing room
+  // 'large'   → min(95vw, 90vh) — fills the viewport
+  // 'massive' → min(98vw, 95vh) — edge-to-edge
   logoSize: 'normal',
 
-  // ===================
-  // OPTIONAL - Animation
-  // ===================
+  // ◈ Fade-in animation
   fadeIn: true,
   fadeInDuration: 1.2, // seconds
 
-  // ===================
-  // OPTIONAL - Structured Data
-  // ===================
+  // ◈ Structured data (JSON-LD for search engines)
   enableStructuredData: true,
-  organizationType: 'Organization', // 'Organization', 'LocalBusiness', 'Person', etc.
+  organizationType: 'Organization', // 'Organization', 'LocalBusiness', 'Person'
 };

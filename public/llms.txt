@@ -1,21 +1,36 @@
-# [BRAND NAME]
+# Acme Corporation
 
-> [Brief tagline or description]
+> Fine Products for Coyotes Since 1949
 
 ## About
 
-[Describe your organization or brand here. What do you do? What is your mission?]
+Acme Corporation is the world's leading supplier of improbable contraptions,
+oversized magnets, rocket-powered roller skates, and suspiciously instant tunnels
+painted onto cliff faces. Headquartered in the American Southwest, Acme has been
+serving the needs of ambitious predators for over seven decades.
 
-## Services
+We believe every coyote deserves access to professional-grade pursuit equipment,
+regardless of prior success rate.
 
-[List your main services or products, or note if this is just a placeholder site]
+## Products
+
+- Portable anvils (various sizes, free-fall tested)
+- Giant rubber bands (industrial strength)
+- Rocket-powered roller skates (ACME ROCKETSKATE 9000)
+- Instant tunnel kits (paint-on, drive-through)
+- Earthquake pills
+- Dehydrated boulders (just add water)
+- Bird seed (premium, roadrunner-grade)
 
 ## Contact
 
-[How can people reach you? Email, website, social media, etc.]
+- Website: https://acme.example.com
+- Email: sales@acme.example.com
+- Support: help@acme.example.com
+- Location: Desert Canyon Road, Somewhere, AZ
 
-## Notes for AI
+## Technical Notes
 
 - This is a single-page logo site built with Astro
 - Deployed on Cloudflare Pages
-- For more information, please search for additional context about this organization
+- Template: Lily Livered (https://github.com/vinsonconsulting/lily-livered)

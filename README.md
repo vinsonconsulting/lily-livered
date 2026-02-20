@@ -1,57 +1,69 @@
 # Lily Livered
 
-A minimal, high-performance single-logo landing page. Built with Astro, optimized for Cloudflare Pages.
+You bought a domain. You're not ready to build a site. You _are_ ready to stop staring at a parking page that says "Future home of something quite cool" like it's 2003.
+
+Lily Livered is a one-page logo site for domains that deserve better than nothing but aren't getting a full website today. Drop in your SVG, edit one config file, push to Cloudflare Pages. Done before your coffee gets cold.
+
+**What you get:**
+- A resizable logo that looks good on everything from a phone to a projector (yes, that counts as an interactive feature)
+- Three tiers of analytics so you can watch your one visitor a month in stunning detail
+- `robots.txt` and `llms.txt` so search engines and AI actually know you exist
+- A 404 page, because even a single-page site needs to handle disappointment gracefully
 
 ## Quick Start
 
 ```bash
-# 1. Use this template (click "Use this template" on GitHub)
-#    Or clone directly:
-git clone https://github.com/vinsonconsulting/lily-livered.git my-brand-site
-cd my-brand-site
-
-# 2. Install dependencies
+git clone https://github.com/vinsonconsulting/lily-livered.git my-site
+cd my-site
 npm install
-
-# 3. Configure your site
-#    Edit src/config.js with your details
-
-# 4. Add your logo
-#    Replace public/logo.svg
-
-# 5. Preview locally
-npm run dev
-
-# 6. Deploy
-git add -A && git commit -m "Initial setup" && git push
 ```
 
-## Configuration
+Then do three things:
 
-All settings are in **`src/config.js`**:
+1. **Drop your logo** into `public/logo.svg`
+2. **Edit `src/config.js`** with your details (see below)
+3. **Edit `public/llms.txt`** and `public/robots.txt` with your info
+
+Preview it:
+
+```bash
+npm run dev    # → localhost:4321
+```
+
+Deploy it:
+
+```bash
+git add -A && git commit -m "My domain has pants now" && git push
+```
+
+## The One File You Actually Edit
+
+**`src/config.js`** — everything lives here:
 
 ```javascript
 export const config = {
-  // Required
-  siteName: 'BRAND NAME',
-  siteDescription: 'Your brand description',
-  siteUrl: 'https://yourdomain.com',
+  // ◈ The basics
+  siteName: 'Acme Corporation',
+  siteDescription: 'Fine Products for Coyotes Since 1949',
+  siteUrl: 'https://acme.example.com',
 
-  // Analytics (optional - leave empty to disable)
-  googleAnalyticsId: '',
-  clarityProjectId: '',
-  cloudflareAnalyticsToken: '',
+  // ◈ Analytics (leave '' to skip any of these)
+  googleAnalyticsId: '',           // 'G-XXXXXXXXXX'
+  clarityProjectId: '',            // 'abc123xyz'
+  cloudflareAnalyticsToken: '',    // 'abcd1234...'
 
-  // Appearance
+  // ◈ Colors
   backgroundColor: '#000000',
   textColor: '#ffffff',
-  logoSize: 'normal',  // 'normal' | 'large' | 'massive'
 
-  // Animation
+  // ◈ How big should the logo be?
+  logoSize: 'normal',   // 'normal' | 'large' | 'massive'
+
+  // ◈ Fade-in animation
   fadeIn: true,
   fadeInDuration: 1.2,
 
-  // Structured Data
+  // ◈ Structured data for search engines
   enableStructuredData: true,
   organizationType: 'Organization',
 };
@@ -59,138 +71,103 @@ export const config = {
 
 ### Logo Sizes
 
-| Option | Size | Use Case |
-|--------|------|----------|
-| `normal` | `min(92vw, 80vh)` | Good for most logos |
-| `large` | `min(95vw, 90vh)` | Logos that need more presence |
-| `massive` | `min(98vw, 95vh)` | Edge-to-edge, minimal padding |
+| Setting | What it does | When to use it |
+|---------|-------------|----------------|
+| `'normal'` | Comfortable fit, breathing room | Most logos |
+| `'large'` | Fills most of the screen | Bold wordmarks, wide logos |
+| `'massive'` | Edge-to-edge domination | You want the logo and nothing else |
 
-## File Structure
+## Your Logo (SVG)
+
+Replace `public/logo.svg` with yours. A few ground rules:
+
+- **Convert text to outlines** — no font dependency headaches
+- **Center it in the viewBox** — if it looks off-center on the page, it's off-center in the file
+- **White or light colors** — dark background is the default
+- **Run it through [SVGO](https://jakearchibald.github.io/svgomg/)** — smaller file, faster load
+
+If your logo looks weirdly positioned: open it in Illustrator/Figma/Inkscape, select all, center on artboard, re-export.
+
+## robots.txt
+
+Edit `public/robots.txt` to tell crawlers what's up. The template ships with a sensible default that allows full crawling and points to your sitemap:
 
 ```
-src/
-├── config.js          # All site configuration
-└── pages/
-    ├── index.astro    # Main page
-    └── 404.astro      # 404 page
-public/
-├── logo.svg           # Your logo (replace this)
-├── favicon.ico        # Fallback favicon (optional)
-├── og-image.png       # Social sharing image (optional)
-├── robots.txt
-└── llms.txt           # AI discoverability
+User-agent: *
+Allow: /
+Sitemap: https://yourdomain.com/sitemap.xml
 ```
 
-## Logo Requirements (SVG)
-
-Replace `public/logo.svg` with your logo:
-
-1. **Center content within viewBox** - Ensure artwork is centered, not offset
-2. **Convert text to outlines** - Eliminates font dependency issues
-3. **Use SVGO for optimization** - Reduces file size
-4. **Use white/light colors** - Works well on dark backgrounds
-
-### Troubleshooting Off-Center Logos
-
-If your logo appears off-center:
-
-1. Open the SVG in a vector editor (Illustrator, Figma, Inkscape)
-2. Select all artwork and center it on the artboard
-3. Adjust the viewBox to match the content bounds
-4. Re-export with "Use Artboard" or equivalent option
-
-### Optimization
-
-Run your SVG through [SVGO](https://jakearchibald.github.io/svgomg/) with these settings:
-- Remove metadata
-- Remove comments
-- Clean up IDs
-- Remove empty containers
-
-## Open Graph Image (og-image.png)
-
-Create `public/og-image.png` for social media sharing:
-
-- **Size**: 1200×630 pixels
-- **Content**: Your logo centered on the background color
-- **Format**: PNG (or JPG for photos)
-
-This image appears when your site is shared on social media.
-
-## Favicon
-
-The site uses your SVG logo as the primary favicon. For browsers that don't support SVG favicons:
-
-1. Create a 48×48 pixel `favicon.ico`
-2. Place it in `public/favicon.ico`
-
-Tools: [favicon.io](https://favicon.io/) or [RealFaviconGenerator](https://realfavicongenerator.net/)
+Swap `yourdomain.com` for your actual domain.
 
 ## llms.txt
 
-The `public/llms.txt` file helps AI assistants understand your site. Edit it with:
+Edit `public/llms.txt` so AI systems know who you are. This follows the [llmstxt.org](https://llmstxt.org) spec. The template ships with a placeholder — replace it with your actual company info, services, and contact details.
 
-- Brief description of your organization
-- Services offered
-- Contact information
-- Any notes for AI systems
+## Analytics (Pick Your Poison)
 
-Reference: [llmstxt.org](https://llmstxt.org)
+Three options. All optional. All run off the main thread via Partytown so they don't slow anything down.
 
-## Deployment
+| Service | What it tells you | Get it at |
+|---------|------------------|-----------|
+| **Google Analytics 4** | Everything. Too much, probably. | [analytics.google.com](https://analytics.google.com) |
+| **Microsoft Clarity** | Session recordings, heatmaps, rage clicks | [clarity.microsoft.com](https://clarity.microsoft.com) |
+| **Cloudflare Web Analytics** | Privacy-friendly basics, ~1KB | CF Dashboard ↗ Web Analytics |
 
-### Cloudflare Pages
+Paste the ID into `config.js`. Leave blank to disable. They stack — use one, two, or all three.
 
-1. Push to GitHub
-2. In [Cloudflare Dashboard](https://dash.cloudflare.com) → Pages → Create project
-3. Connect your GitHub repo
+## Optional Extras
+
+**Social sharing image** — Create a 1200×630 `public/og-image.png` (your logo on your background color). This is what shows up when someone shares your link.
+
+**Favicon** — The SVG logo doubles as the favicon. For older browsers, add a 48×48 `public/favicon.ico`. Tools: [favicon.io](https://favicon.io/) or [RealFaviconGenerator](https://realfavicongenerator.net/).
+
+## Deploying to Cloudflare Pages
+
+1. Push this repo to GitHub
+2. [Cloudflare Dashboard](https://dash.cloudflare.com) ↗ Pages ↗ Create project
+3. Connect your repo
 4. Build settings:
-   - **Build command**: `npm run build`
-   - **Build output directory**: `dist`
-   - **Framework preset**: Astro
-5. Add custom domain
+   - **Build command:** `npm run build`
+   - **Output directory:** `dist`
+   - **Framework preset:** Astro
+5. Add your custom domain
 
-Push to GitHub and Cloudflare auto-deploys.
+Every `git push` after that auto-deploys.
 
-## Accessibility
+## File Map
 
-The template includes:
-
-- `prefers-reduced-motion` support - Disables animations for users who prefer reduced motion
-- Semantic HTML structure
-- Proper alt text from config
-- High contrast default (white on black)
-
-## Analytics
-
-Three analytics options are supported (all optional):
-
-| Service | Purpose | Setup |
-|---------|---------|-------|
-| **Google Analytics 4** | Full-featured analytics | [analytics.google.com](https://analytics.google.com) |
-| **Microsoft Clarity** | Session recordings & heatmaps | [clarity.microsoft.com](https://clarity.microsoft.com) |
-| **Cloudflare Web Analytics** | Privacy-focused, ~1KB | CF Dashboard → Web Analytics |
-
-Set any to empty string `''` in config to disable.
-
-## Development
-
-```bash
-npm run dev      # Start dev server at localhost:4321
-npm run build    # Build for production
-npm run preview  # Preview production build
+```
+src/
+├── config.js            ← Edit this. All your settings.
+└── pages/
+    ├── index.astro      ← The page. You probably don't need to touch this.
+    └── 404.astro        ← 404 page. Also probably leave it alone.
+public/
+├── logo.svg             ← Replace this with your logo.
+├── robots.txt           ← Edit with your domain.
+├── llms.txt             ← Edit with your company info.
+├── favicon.ico          ← Optional. For legacy browsers.
+└── og-image.png         ← Optional. For social media previews.
 ```
 
-## Features
+## Commands
 
-- Zero-config deployment with Cloudflare Pages
-- Perfect Lighthouse scores
-- SEO ready (Open Graph, Twitter Cards, JSON-LD)
-- Accessibility (reduced motion, semantic HTML)
-- AI discoverable (llms.txt)
-- Analytics ready (GA4, Clarity, Cloudflare)
-- Minimal footprint
+```bash
+npm run dev       # Dev server at localhost:4321
+npm run build     # Production build → dist/
+npm run preview   # Preview the production build locally
+```
+
+## What's Under the Hood
+
+- **Astro 5** — static site generator, zero client JS by default
+- **Partytown** — runs analytics scripts off the main thread
+- **Cloudflare Pages** — edge deployment, free tier is generous
+- Semantic HTML, `prefers-reduced-motion` support, high-contrast defaults
+- Open Graph, Twitter Cards, JSON-LD structured data — all auto-generated from your config
+- Perfect Lighthouse scores because there's almost nothing to screw up
 
 ## License
 
-MIT
+MIT — Do whatever you want with it.

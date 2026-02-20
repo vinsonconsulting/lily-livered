@@ -26,7 +26,12 @@ Thumbs.db
 Icon
 Icon?
 
+# Lockfiles (npm is canonical — see package-lock.json)
+pnpm-lock.yaml
+yarn.lock
+
 # Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+firebase-debug.log*

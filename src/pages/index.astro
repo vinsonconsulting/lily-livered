@@ -24,12 +24,14 @@ const logoSizes = {
 };
 const logoWidth = logoSizes[logoSize] || logoSizes.normal;
 
-const structuredData = enableStructuredData ? JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': organizationType,
-  name: siteName,
-  url: siteUrl,
-}) : null;
+const structuredData = enableStructuredData
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': organizationType,
+      name: siteName,
+      url: siteUrl,
+    })
+  : null;
 ---
 
 <!doctype html>

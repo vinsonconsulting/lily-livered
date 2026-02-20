@@ -5,10 +5,15 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "check": "biome check .",
+    "check:fix": "biome check --write ."
   },
   "dependencies": {
     "@astrojs/partytown": "^2.1.2",
     "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.3"
   }
 }

@@ -1,14 +1,31 @@
 # Lily Livered
 
+<!-- Lighthouse scores (dynamic, updated by CI) -->
 [![Lighthouse Performance](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/vinsonconsulting/lily-livered/main/.github/badges/lighthouse_perf.json)](https://github.com/vinsonconsulting/lily-livered/actions/workflows/lighthouse.yml)
 [![Lighthouse Accessibility](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/vinsonconsulting/lily-livered/main/.github/badges/lighthouse_a11y.json)](https://github.com/vinsonconsulting/lily-livered/actions/workflows/lighthouse.yml)
 [![Lighthouse Best Practices](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/vinsonconsulting/lily-livered/main/.github/badges/lighthouse_best.json)](https://github.com/vinsonconsulting/lily-livered/actions/workflows/lighthouse.yml)
 [![Lighthouse SEO](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/vinsonconsulting/lily-livered/main/.github/badges/lighthouse_seo.json)](https://github.com/vinsonconsulting/lily-livered/actions/workflows/lighthouse.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+<!-- Live site scoring (dynamic, hit demo URL) -->
+[![W3C Validation](https://img.shields.io/w3c-validation/html?targetUrl=https%3A%2F%2Flily-livered.jimvinson.com&label=W3C)](https://validator.nu/?doc=https%3A%2F%2Flily-livered.jimvinson.com)
+[![Mozilla Observatory](https://img.shields.io/mozilla-observatory/grade/lily-livered.jimvinson.com?label=Observatory)](https://observatory.mozilla.org/analyze/lily-livered.jimvinson.com)
+
+<!-- CI status (dynamic) -->
+[![CI](https://github.com/vinsonconsulting/lily-livered/actions/workflows/ci.yml/badge.svg)](https://github.com/vinsonconsulting/lily-livered/actions/workflows/ci.yml)
+
+<!-- Repo stats (dynamic, from GitHub API) -->
+[![GitHub last commit](https://img.shields.io/github/last-commit/vinsonconsulting/lily-livered)](https://github.com/vinsonconsulting/lily-livered/commits/main)
+[![GitHub repo size](https://img.shields.io/github/repo-size/vinsonconsulting/lily-livered)](https://github.com/vinsonconsulting/lily-livered)
+[![GitHub stars](https://img.shields.io/github/stars/vinsonconsulting/lily-livered?style=flat)](https://github.com/vinsonconsulting/lily-livered/stargazers)
+
+<!-- Tech stack (static) -->
 [![Built with Astro](https://img.shields.io/badge/built%20with-Astro-bc52ee.svg?logo=astro)](https://astro.build)
 [![Deploy: Cloudflare Pages](https://img.shields.io/badge/deploy-Cloudflare%20Pages-f38020.svg?logo=cloudflare)](https://pages.cloudflare.com)
+[![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?logo=biome)](https://biomejs.dev)
+[![Renovate enabled](https://img.shields.io/badge/Renovate-enabled-brightgreen?logo=renovatebot)](https://github.com/apps/renovate)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Your email-only domains are naked, and you know it. Here's a pair of pants.
+**[↗ Live Demo](https://lily-livered.jimvinson.com)** · Your email-only domains are naked, and you know it. Here's a pair of pants.
 
 You bought a domain. Maybe you're not ready to build the site yet. Maybe it's just an email domain and always will be. Either way, you _are_ ready to stop staring at a parking page that says "Future home of something quite cool" like it's 2003.
 
@@ -155,7 +172,10 @@ public/
 ├── logo.svg             ← Replace this with your logo.
 ├── robots.txt           ← Edit with your domain.
 ├── llms.txt             ← Edit with your company info.
+├── _headers             ← Security headers for Cloudflare Pages.
 └── og-image.png         ← Optional. For social media previews.
+biome.json               ← Lint/format config.
+renovate.json            ← Automated dependency updates.
 ```
 
 ## Commands
@@ -164,6 +184,8 @@ public/
 npm run dev       # Dev server at localhost:4321
 npm run build     # Production build → dist/
 npm run preview   # Preview the production build locally
+npm run check     # Lint + format check via Biome
+npm run check:fix # Auto-fix lint and format issues
 ```
 
 ## What's Under the Hood
@@ -171,6 +193,8 @@ npm run preview   # Preview the production build locally
 - **Astro 5** — static site generator, zero client JS by default
 - **Partytown** — runs analytics scripts off the main thread
 - **Cloudflare Pages** — edge deployment, free tier is generous
+- **Biome** — linting and formatting in one Rust binary
+- **Renovate** — automated dependency updates so your clone doesn't rot
 - Semantic HTML, `prefers-reduced-motion` support, high-contrast defaults
 - Open Graph, Twitter Cards, JSON-LD structured data — all auto-generated from your config
 - Perfect Lighthouse scores because there's almost nothing to screw up

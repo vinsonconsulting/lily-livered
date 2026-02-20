@@ -8,9 +8,9 @@ export const config = {
   siteUrl: 'https://acme.example.com',
 
   // ◈ Analytics — paste your IDs, or leave '' to disable
-  googleAnalyticsId: '',           // e.g., 'G-XXXXXXXXXX'
-  clarityProjectId: '',            // e.g., 'abc123xyz'
-  cloudflareAnalyticsToken: '',    // e.g., 'abcd1234...'
+  googleAnalyticsId: '', // e.g., 'G-XXXXXXXXXX'
+  clarityProjectId: '', // e.g., 'abc123xyz'
+  cloudflareAnalyticsToken: '', // e.g., 'abcd1234...'
 
   // ◈ Colors
   backgroundColor: '#000000',

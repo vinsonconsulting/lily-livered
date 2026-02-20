@@ -205,6 +205,7 @@ npm run check:fix # Auto-fix lint and format issues
 - Semantic HTML, `prefers-reduced-motion` support, high-contrast defaults
 - Auto-generated sitemap via `@astrojs/sitemap`
 - Open Graph, Twitter Cards, JSON-LD structured data — all auto-generated from your config
+- Security headers: HSTS, CSP, CORP, COOP, X-Frame-Options, Referrer-Policy, Permissions-Policy
 - Near-perfect Lighthouse scores — Accessibility and SEO at 100, Performance scales with your logo complexity
 
 ## FAQ

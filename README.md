@@ -130,8 +130,6 @@ Paste the ID into `config.js`. Leave blank to disable. They stack — use one, t
 
 **Social sharing image** — Create a 1200×630 `public/og-image.png` (your logo on your background color). This is what shows up when someone shares your link.
 
-**Favicon** — The SVG logo doubles as the favicon. For older browsers, add a 48×48 `public/favicon.ico`. Tools: [favicon.io](https://favicon.io/) or [RealFaviconGenerator](https://realfavicongenerator.net/).
-
 ## Deploying to Cloudflare Pages
 
 1. Push this repo to GitHub
@@ -157,7 +155,6 @@ public/
 ├── logo.svg             ← Replace this with your logo.
 ├── robots.txt           ← Edit with your domain.
 ├── llms.txt             ← Edit with your company info.
-├── favicon.ico          ← Optional. For legacy browsers.
 └── og-image.png         ← Optional. For social media previews.
 ```
 

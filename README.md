@@ -150,6 +150,14 @@ Three options. All optional. All run off the main thread via Partytown so they d
 
 Paste the ID into `config.js`. Leave blank to disable. They stack — use one, two, or all three.
 
+**CSP note:** When you enable any analytics service, Partytown injects an inline bootstrap script. You'll need to add `'unsafe-inline'` to the `script-src` directive in `public/_headers`:
+
+```
+script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms;
+```
+
+The template ships without it for a stricter default CSP score.
+
 ## Optional Extras
 
 **Social sharing image** — Create a 1200×630 `public/og-image.png` (your logo on your background color), then set `hasOgImage: true` in `config.js`. This is what shows up when someone shares your link. The image meta tags are only emitted when you opt in — no broken image URLs out of the box.

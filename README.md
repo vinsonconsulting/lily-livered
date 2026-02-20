@@ -1,5 +1,13 @@
 # Lily Livered
 
+[![Lighthouse Performance](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/vinsonconsulting/lily-livered/main/.github/badges/lighthouse_perf.json)](https://github.com/vinsonconsulting/lily-livered/actions/workflows/lighthouse.yml)
+[![Lighthouse Accessibility](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/vinsonconsulting/lily-livered/main/.github/badges/lighthouse_a11y.json)](https://github.com/vinsonconsulting/lily-livered/actions/workflows/lighthouse.yml)
+[![Lighthouse Best Practices](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/vinsonconsulting/lily-livered/main/.github/badges/lighthouse_best.json)](https://github.com/vinsonconsulting/lily-livered/actions/workflows/lighthouse.yml)
+[![Lighthouse SEO](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/vinsonconsulting/lily-livered/main/.github/badges/lighthouse_seo.json)](https://github.com/vinsonconsulting/lily-livered/actions/workflows/lighthouse.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Built with Astro](https://img.shields.io/badge/built%20with-Astro-bc52ee.svg?logo=astro)](https://astro.build)
+[![Deploy: Cloudflare Pages](https://img.shields.io/badge/deploy-Cloudflare%20Pages-f38020.svg?logo=cloudflare)](https://pages.cloudflare.com)
+
 You bought a domain. You're not ready to build a site. You _are_ ready to stop staring at a parking page that says "Future home of something quite cool" like it's 2003.
 
 Lily Livered is a one-page logo site for domains that deserve better than nothing but aren't getting a full website today. Drop in your SVG, edit one config file, push to Cloudflare Pages. Done before your coffee gets cold.

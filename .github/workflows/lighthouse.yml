@@ -1,0 +1,64 @@
+name: Lighthouse
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Run Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        id: lighthouse
+        with:
+          uploadArtifacts: true
+          configPath: .github/lighthouse/lighthouserc.json
+
+      - name: Generate badge JSON
+        if: github.ref == 'refs/heads/main'
+        env:
+          LH_MANIFEST: ${{ steps.lighthouse.outputs.manifest }}
+        run: |
+          mkdir -p .github/badges
+
+          # Extract scores (0-1 floats → 0-100 integers)
+          PERF=$(echo "$LH_MANIFEST" | jq -r '.[0].summary.performance' | awk '{printf "%.0f", $1 * 100}')
+          A11Y=$(echo "$LH_MANIFEST" | jq -r '.[0].summary.accessibility' | awk '{printf "%.0f", $1 * 100}')
+          BEST=$(echo "$LH_MANIFEST" | jq -r '.[0].summary["best-practices"]' | awk '{printf "%.0f", $1 * 100}')
+          SEO=$(echo "$LH_MANIFEST"  | jq -r '.[0].summary.seo' | awk '{printf "%.0f", $1 * 100}')
+
+          # Color: 90+ green, 50+ orange, else red
+          color() { [ "$1" -ge 90 ] && echo "brightgreen" || { [ "$1" -ge 50 ] && echo "orange" || echo "red"; }; }
+
+          write_badge() {
+            printf '{"schemaVersion":1,"label":"lighthouse %s","message":"%s","color":"%s"}\n' "$1" "$2" "$3" > ".github/badges/lighthouse_${4}.json"
+          }
+
+          write_badge "performance"    "$PERF" "$(color "$PERF")" "perf"
+          write_badge "accessibility"  "$A11Y" "$(color "$A11Y")" "a11y"
+          write_badge "best practices" "$BEST" "$(color "$BEST")" "best"
+          write_badge "SEO"            "$SEO"  "$(color "$SEO")"  "seo"
+
+      - name: Commit badges
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/badges/
+          git diff --staged --quiet || (git commit -m "Update Lighthouse badges [skip ci]" && git push)

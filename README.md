@@ -8,14 +8,16 @@
 [![Built with Astro](https://img.shields.io/badge/built%20with-Astro-bc52ee.svg?logo=astro)](https://astro.build)
 [![Deploy: Cloudflare Pages](https://img.shields.io/badge/deploy-Cloudflare%20Pages-f38020.svg?logo=cloudflare)](https://pages.cloudflare.com)
 
-You bought a domain. You're not ready to build a site. You _are_ ready to stop staring at a parking page that says "Future home of something quite cool" like it's 2003.
+Your email-only domains are naked, and you know it. Here's a pair of pants.
+
+You bought a domain. Maybe you're not ready to build the site yet. Maybe it's just an email domain and always will be. Either way, you _are_ ready to stop staring at a parking page that says "Future home of something quite cool" like it's 2003.
 
 Lily Livered is a one-page logo site for domains that deserve better than nothing but aren't getting a full website today. Drop in your SVG, edit one config file, push to Cloudflare Pages. Done before your coffee gets cold.
 
 **What you get:**
-- A resizable logo that looks good on everything from a phone to a projector (yes, that counts as an interactive feature)
-- Three tiers of analytics so you can watch your one visitor a month in stunning detail
-- `robots.txt` and `llms.txt` so search engines and AI actually know you exist
+- A fun resizable logo that looks good on everything from a phone to a projector — playing with the three size settings counts as an interactive feature
+- Three tiers of site metrics and visitor tracking to keep tabs on that baseline traffic flow
+- `robots.txt` and `llms.txt` so you can tell the cool kids what's going on
 - A 404 page, because even a single-page site needs to handle disappointment gracefully
 
 ## Quick Start

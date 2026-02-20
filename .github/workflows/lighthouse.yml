@@ -37,11 +37,16 @@ jobs:
         run: |
           mkdir -p .github/badges
 
-          # Extract scores (0-1 floats → 0-100 integers)
-          PERF=$(echo "$LH_MANIFEST" | jq -r '.[0].summary.performance' | awk '{printf "%.0f", $1 * 100}')
-          A11Y=$(echo "$LH_MANIFEST" | jq -r '.[0].summary.accessibility' | awk '{printf "%.0f", $1 * 100}')
-          BEST=$(echo "$LH_MANIFEST" | jq -r '.[0].summary["best-practices"]' | awk '{printf "%.0f", $1 * 100}')
-          SEO=$(echo "$LH_MANIFEST"  | jq -r '.[0].summary.seo' | awk '{printf "%.0f", $1 * 100}')
+          # With numberOfRuns: 3, pick the median score for each category.
+          # jq sorts the scores and picks the middle value.
+          median() {
+            echo "$LH_MANIFEST" | jq -r "[.[].summary.\"$1\"] | sort | .[length/2 | floor]" | awk '{printf "%.0f", $1 * 100}'
+          }
+
+          PERF=$(median performance)
+          A11Y=$(median accessibility)
+          BEST=$(median best-practices)
+          SEO=$(median seo)
 
           # Color: 90+ green, 50+ orange, else red
           color() { [ "$1" -ge 90 ] && echo "brightgreen" || { [ "$1" -ge 50 ] && echo "orange" || echo "red"; }; }

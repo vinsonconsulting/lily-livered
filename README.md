@@ -37,6 +37,10 @@ Lily Livered is a one-page logo site for domains that deserve better than nothin
 - `robots.txt` and `llms.txt` so you can tell the cool kids what's going on
 - A 404 page, because even a single-page site needs to handle disappointment gracefully
 
+> **A note on our Lighthouse scores:** The demo site ships with an absurdly complex 72 KB SVG logo (a 16th-century woodcut skull surrounded by clouds — long story). Your logo is almost certainly simpler, lighter, and faster to render. Expect your Performance score to be higher than ours. You are, after all, smarter, cooler, and better looking than us.
+>
+> **Best Practices at 82?** That's Astro's inline `<style>` tags requiring `'unsafe-inline'` in our Content Security Policy. Astro 5.9+ ships with [experimental hash-based CSP](https://docs.astro.build/en/reference/experimental-flags/csp/) that eliminates this — once it graduates from experimental, this template will adopt it and the score will hit 100.
+
 ## Quick Start
 
 ```bash
@@ -197,7 +201,11 @@ npm run check:fix # Auto-fix lint and format issues
 - **Renovate** — automated dependency updates so your clone doesn't rot
 - Semantic HTML, `prefers-reduced-motion` support, high-contrast defaults
 - Open Graph, Twitter Cards, JSON-LD structured data — all auto-generated from your config
-- Perfect Lighthouse scores because there's almost nothing to screw up
+- Near-perfect Lighthouse scores — Accessibility and SEO at 100, Performance scales with your logo complexity
+
+## Demo Logo Credit
+
+The demo site logo is adapted from a woodcut on page 181 of Claude Paradin's [*Devises heroïques*](https://www.emblems.arts.gla.ac.uk/french/books.php?id=fpab) (Lyon: Jean de Tournes & Guillaume Gazeau, 1557). The image is in the public domain.
 
 ## License
 

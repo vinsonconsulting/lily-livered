@@ -39,6 +39,8 @@ Lily Livered is a one-page logo site for domains that deserve better than nothin
 - A 404 page, because even a single-page site needs to handle disappointment gracefully
 
 > **About that Performance score:** The demo site ships with a deliberately absurd 72 KB SVG logo — a 16th-century woodcut skull with 30,000+ path coordinates. It's a stress test, not a template recommendation. Your logo is almost certainly simpler, lighter, and faster to render. Expect your Performance score to be higher than ours.
+>
+> Lighthouse Performance is also inherently noisy — scores vary run to run depending on CI runner load. Our badge workflow runs Lighthouse three times per push and takes the median to keep the number stable. We're playing around in the borderlands so you don't have to.
 
 ## Quick Start
 

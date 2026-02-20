@@ -64,7 +64,7 @@ npm run dev    # → localhost:4321
 Deploy it:
 
 ```bash
-git add -A && git commit -m "My domain has pants now" && git push
+git add . && git commit -m "My domain has pants now" && git push
 ```
 
 ## The One File You Actually Edit
@@ -73,30 +73,33 @@ git add -A && git commit -m "My domain has pants now" && git push
 
 ```javascript
 export const config = {
-  // ◈ The basics
+  // ◈ Site Info
   siteName: 'Acme Corporation',
   siteDescription: 'Fine Products for Coyotes Since 1949',
   siteUrl: 'https://acme.example.com',
 
-  // ◈ Analytics (leave '' to skip any of these)
-  googleAnalyticsId: '',           // 'G-XXXXXXXXXX'
-  clarityProjectId: '',            // 'abc123xyz'
-  cloudflareAnalyticsToken: '',    // 'abcd1234...'
+  // ◈ Analytics — paste your IDs, or leave '' to disable
+  googleAnalyticsId: '', // e.g., 'G-XXXXXXXXXX'
+  clarityProjectId: '', // e.g., 'abc123xyz'
+  cloudflareAnalyticsToken: '', // e.g., 'abcd1234...'
 
   // ◈ Colors
   backgroundColor: '#000000',
   textColor: '#ffffff',
 
-  // ◈ How big should the logo be?
-  logoSize: 'normal',   // 'normal' | 'large' | 'massive'
+  // ◈ Logo size — how much screen to fill
+  logoSize: 'normal', // 'normal' | 'large' | 'massive'
 
   // ◈ Fade-in animation
   fadeIn: true,
-  fadeInDuration: 1.2,
+  fadeInDuration: 1.2, // seconds
 
-  // ◈ Structured data for search engines
+  // ◈ Social sharing image (set true if you've added public/og-image.png)
+  hasOgImage: false,
+
+  // ◈ Structured data (JSON-LD for search engines)
   enableStructuredData: true,
-  organizationType: 'Organization',
+  organizationType: 'Organization', // 'Organization', 'LocalBusiness', 'Person'
 };
 ```
 
@@ -121,15 +124,15 @@ If your logo looks weirdly positioned: open it in Illustrator/Figma/Inkscape, se
 
 ## robots.txt
 
-Edit `public/robots.txt` to tell crawlers what's up. The template ships with a sensible default that allows full crawling and points to your sitemap:
+Edit `public/robots.txt` to update the domain in the sitemap URL. The sitemap itself is auto-generated at build time by `@astrojs/sitemap` using `siteUrl` from your config:
 
 ```
 User-agent: *
 Allow: /
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://yourdomain.com/sitemap-index.xml
 ```
 
-Swap `yourdomain.com` for your actual domain.
+Swap `yourdomain.com` for your actual domain (should match `siteUrl` in `config.js`).
 
 ## llms.txt
 
@@ -149,7 +152,7 @@ Paste the ID into `config.js`. Leave blank to disable. They stack — use one, t
 
 ## Optional Extras
 
-**Social sharing image** — Create a 1200×630 `public/og-image.png` (your logo on your background color). This is what shows up when someone shares your link.
+**Social sharing image** — Create a 1200×630 `public/og-image.png` (your logo on your background color), then set `hasOgImage: true` in `config.js`. This is what shows up when someone shares your link. The image meta tags are only emitted when you opt in — no broken image URLs out of the box.
 
 ## Deploying to Cloudflare Pages
 
@@ -200,8 +203,35 @@ npm run check:fix # Auto-fix lint and format issues
 - **Biome** — linting and formatting in one Rust binary
 - **Renovate** — automated dependency updates so your clone doesn't rot
 - Semantic HTML, `prefers-reduced-motion` support, high-contrast defaults
+- Auto-generated sitemap via `@astrojs/sitemap`
 - Open Graph, Twitter Cards, JSON-LD structured data — all auto-generated from your config
 - Near-perfect Lighthouse scores — Accessibility and SEO at 100, Performance scales with your logo complexity
+
+## FAQ
+
+**"Isn't this over-engineered for a one-page site?"**
+
+Yes, gloriously so. That's the point. Your domain gets the same edge deployment, security headers, structured data, and analytics pipeline as a site with a hundred pages — except you configured it in sixty seconds. The over-engineering is a feature, not a bug. You're welcome.
+
+**"Why does the demo logo look like it was drawn by a 16th-century monk?"**
+
+Because it was (see credits below). We wanted to prove the template handles complex SVGs gracefully. Your clean, modern logo will load faster and score higher. Use us as the "before" picture.
+
+**"A 72 KB SVG? For a template about simplicity?"**
+
+The template is simple. The demo logo is a stress test. It's a 16th-century woodcut with 30,000+ coordinates, SVGO-optimized from 236 KB down to 72 KB (32 KB on the wire with compression). If it can handle this, it can handle your logo.
+
+**"Why Cloudflare Pages specifically?"**
+
+Free tier is generous (unlimited bandwidth, 500 builds/month), deploys are fast, and the edge network is global. You could deploy this to Vercel or Netlify with minimal changes, but Cloudflare Pages is the default because it's the best deal for a site that costs nothing to run.
+
+**"The 404 page loads a Google Font. Isn't that a dependency?"**
+
+It is. Bebas Neue loads from Google Fonts because it looks fantastic at 50vw and we didn't want to bundle a 40 KB font file for a page most people never see. If Google Fonts goes down, your 404 falls back to the browser's default sans-serif. The world keeps turning.
+
+**"Why three analytics services?"**
+
+Because they do different things and they're all free. GA4 is the kitchen sink. Clarity gives you session recordings and heatmaps. Cloudflare Web Analytics is privacy-friendly and weighs 1 KB. Pick one, pick all three, pick none. They're off the main thread via Partytown so they don't affect performance.
 
 ## Demo Logo Credit
 

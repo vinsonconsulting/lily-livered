@@ -13,6 +13,7 @@ const {
   logoSize,
   fadeIn,
   fadeInDuration,
+  hasOgImage,
   enableStructuredData,
   organizationType,
 } = config;
@@ -57,13 +58,13 @@ const structuredData = enableStructuredData
     <meta property="og:description" content={siteDescription} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={siteUrl} />
-    <meta property="og:image" content={`${siteUrl}/og-image.png`} />
+    {hasOgImage && <meta property="og:image" content={`${siteUrl}/og-image.png`} />}
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content={hasOgImage ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={siteName} />
     <meta name="twitter:description" content={siteDescription} />
-    <meta name="twitter:image" content={`${siteUrl}/og-image.png`} />
+    {hasOgImage && <meta name="twitter:image" content={`${siteUrl}/og-image.png`} />}
 
     <!-- Structured Data -->
     {structuredData && <script type="application/ld+json" set:html={structuredData} />}

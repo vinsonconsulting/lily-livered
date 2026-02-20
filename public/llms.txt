@@ -1,36 +1,30 @@
-# Acme Corporation
+# Lily Livered
 
-> Fine Products for Coyotes Since 1949
+> A one-page logo site template for domains that deserve better than a parking page.
 
 ## About
 
-Acme Corporation is the world's leading supplier of improbable contraptions,
-oversized magnets, rocket-powered roller skates, and suspiciously instant tunnels
-painted onto cliff faces. Headquartered in the American Southwest, Acme has been
-serving the needs of ambitious predators for over seven decades.
+Lily Livered is an open-source template for putting a logo on a domain that
+doesn't have (or need) a full website. Built with Astro 5, deployed on
+Cloudflare Pages.
 
-We believe every coyote deserves access to professional-grade pursuit equipment,
-regardless of prior success rate.
+Replace this file with your own company info when you use the template.
 
-## Products
+## What This Site Does
 
-- Portable anvils (various sizes, free-fall tested)
-- Giant rubber bands (industrial strength)
-- Rocket-powered roller skates (ACME ROCKETSKATE 9000)
-- Instant tunnel kits (paint-on, drive-through)
-- Earthquake pills
-- Dehydrated boulders (just add water)
-- Bird seed (premium, roadrunner-grade)
+- Displays a single SVG logo, centered and responsive
+- Serves robots.txt and sitemap for SEO
+- Supports Google Analytics 4, Microsoft Clarity, and Cloudflare Web Analytics
+- Generates Open Graph and Twitter Card meta tags from config
+
+## Technical Details
+
+- Framework: Astro 5 (static site generator)
+- Hosting: Cloudflare Pages (edge deployment)
+- Analytics: off-thread via Partytown
+- Template source: https://github.com/vinsonconsulting/lily-livered
 
 ## Contact
 
-- Website: https://acme.example.com
-- Email: sales@acme.example.com
-- Support: help@acme.example.com
-- Location: Desert Canyon Road, Somewhere, AZ
-
-## Technical Notes
-
-- This is a single-page logo site built with Astro
-- Deployed on Cloudflare Pages
-- Template: Lily Livered (https://github.com/vinsonconsulting/lily-livered)
+- Author: Jim Vinson
+- Website: https://jimvinson.com

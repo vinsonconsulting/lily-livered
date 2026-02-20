@@ -8,7 +8,7 @@
 
 <!-- Live site scoring (dynamic, hit demo URL) -->
 [![W3C Validation](https://img.shields.io/w3c-validation/html?targetUrl=https%3A%2F%2Flily-livered.jimvinson.com&label=W3C)](https://validator.nu/?doc=https%3A%2F%2Flily-livered.jimvinson.com)
-[![Mozilla Observatory](https://img.shields.io/mozilla-observatory/grade/lily-livered.jimvinson.com?label=Observatory)](https://observatory.mozilla.org/analyze/lily-livered.jimvinson.com)
+[![Mozilla Observatory](https://img.shields.io/mozilla-observatory/grade/lily-livered.jimvinson.com?label=Observatory)](https://developer.mozilla.org/en-US/observatory/analyze?host=lily-livered.jimvinson.com)
 
 <!-- CI status (dynamic) -->
 [![CI](https://github.com/vinsonconsulting/lily-livered/actions/workflows/ci.yml/badge.svg)](https://github.com/vinsonconsulting/lily-livered/actions/workflows/ci.yml)
@@ -208,7 +208,7 @@ npm run check:fix # Auto-fix lint and format issues
 ## What's Under the Hood
 
 - **Astro 5** — static site generator, zero client JS by default
-- **Partytown** — runs analytics scripts off the main thread
+- **Partytown** — runs analytics scripts off the main thread (loaded only when analytics are configured)
 - **Cloudflare Pages** — edge deployment, free tier is generous
 - **Biome** — linting and formatting in one Rust binary
 - **Renovate** — automated dependency updates so your clone doesn't rot
@@ -243,6 +243,10 @@ It is. Bebas Neue loads from Google Fonts because it looks fantastic at 50vw and
 **"Why three analytics services?"**
 
 Because they do different things and they're all free. GA4 is the kitchen sink. Clarity gives you session recordings and heatmaps. Cloudflare Web Analytics is privacy-friendly and weighs 1 KB. Pick one, pick all three, pick none. They're off the main thread via Partytown so they don't affect performance.
+
+**"A+ on Observatory but Best Practices isn't 100?"**
+
+Different tools, different rules. Mozilla Observatory scores your HTTP response headers — ours are airtight. Lighthouse Best Practices flags `'unsafe-inline'` in `style-src`, which Astro requires for its scoped `<style>` tags. Observatory forgives `style-src` inline; Lighthouse doesn't. Once Astro's hash-based CSP ships, both will be perfect. Until then, we'll take the A+ where we can get it.
 
 ## Demo Logo Credit
 

@@ -39,7 +39,7 @@ Lily Livered is a one-page logo site for domains that deserve better than nothin
 
 > **A note on our Lighthouse scores:** The demo site ships with an absurdly complex 72 KB SVG logo (a 16th-century woodcut skull surrounded by clouds — long story). Your logo is almost certainly simpler, lighter, and faster to render. Expect your Performance score to be higher than ours. You are, after all, smarter, cooler, and better looking than us.
 >
-> **Best Practices at 82?** That's Astro's inline `<style>` tags requiring `'unsafe-inline'` in our Content Security Policy. Astro 5.9+ ships with [experimental hash-based CSP](https://docs.astro.build/en/reference/experimental-flags/csp/) that eliminates this — once it graduates from experimental, this template will adopt it and the score will hit 100.
+> **Best Practices at 82?** That's Astro's inline `<style>` tags requiring `'unsafe-inline'` in our Content Security Policy's `style-src`. Astro 5.9+ ships with [experimental hash-based CSP](https://docs.astro.build/en/reference/experimental-flags/csp/) that eliminates this — once it graduates from experimental, this template will adopt it and the score will hit 100. (Our `script-src` is clean, though — which is why [Mozilla Observatory](https://developer.mozilla.org/en-US/observatory) gives the template an A+.)
 
 ## Quick Start
 
@@ -150,13 +150,15 @@ Three options. All optional. All run off the main thread via Partytown so they d
 
 Paste the ID into `config.js`. Leave blank to disable. They stack — use one, two, or all three.
 
-**CSP note:** When you enable any analytics service, Partytown injects an inline bootstrap script. You'll need to add `'unsafe-inline'` to the `script-src` directive in `public/_headers`:
+**About Partytown and your security score:** Partytown is only loaded when at least one analytics ID is configured — if all three are blank, it's excluded entirely. This matters because Partytown injects an inline bootstrap script, which forces `'unsafe-inline'` into your Content Security Policy's `script-src` directive. Mozilla Observatory penalizes that by 20 points, enough to drop your grade from A+ to B+.
+
+Out of the box (no analytics), the template scores **A+ on Observatory** and keeps a tight CSP. When you add an analytics ID, you'll need to add `'unsafe-inline'` back to `script-src` in `public/_headers`:
 
 ```
 script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms;
 ```
 
-The template ships without it for a stricter default CSP score.
+That's a deliberate tradeoff: Observatory drops to B+, but you get off-thread analytics with zero main-thread cost. Partytown's inline script is the bootstrap that makes that possible — there's no way around it until Astro's [experimental hash-based CSP](https://docs.astro.build/en/reference/experimental-flags/csp/) graduates and can generate per-build nonces.
 
 ## Optional Extras
 

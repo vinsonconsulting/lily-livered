@@ -7,7 +7,7 @@ A minimal, high-performance single-logo landing page. Built with Astro, optimize
 ```bash
 # 1. Use this template (click "Use this template" on GitHub)
 #    Or clone directly:
-git clone https://github.com/vinsonconsulting/logo-site-template.git my-brand-site
+git clone https://github.com/vinsonconsulting/lily-livered.git my-brand-site
 cd my-brand-site
 
 # 2. Install dependencies

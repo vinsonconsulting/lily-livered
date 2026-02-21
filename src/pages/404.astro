@@ -1,8 +1,15 @@
 ---
 import { config } from '../config.js';
 
-const { siteName, backgroundColor, textColor, lightBackgroundColor, lightTextColor, colorScheme } =
-  config;
+const {
+  siteName,
+  backgroundColor,
+  textColor,
+  lightBackgroundColor,
+  lightTextColor,
+  colorScheme,
+  hasFavicon,
+} = config;
 
 // Resolve effective colors based on colorScheme
 const effectiveBg = colorScheme === 'light' ? lightBackgroundColor : backgroundColor;
@@ -24,7 +31,7 @@ const colorCss = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 - {siteName}</title>
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="icon" type="image/svg+xml" href={hasFavicon ? '/favicon.svg' : '/logo.svg'} />
     <meta name="theme-color" content={effectiveBg} />
 
     <!-- Color scheme -->

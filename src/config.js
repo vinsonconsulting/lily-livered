@@ -36,6 +36,9 @@ export const config = {
   // ◈ Social sharing image (set true if you've added public/og-image.png)
   hasOgImage: false,
 
+  // ◈ Favicon (set true if you've added public/favicon.svg)
+  hasFavicon: false,
+
   // ◈ Structured data (JSON-LD for search engines)
   enableStructuredData: true,
   organizationType: 'Organization', // 'Organization', 'LocalBusiness', 'Person'

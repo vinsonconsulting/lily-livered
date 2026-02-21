@@ -17,6 +17,7 @@ const {
   fadeIn,
   fadeInDuration,
   hasOgImage,
+  hasFavicon,
   enableStructuredData,
   organizationType,
 } = config;
@@ -60,7 +61,7 @@ const colorCss = [
     <title>{siteName}</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="icon" type="image/svg+xml" href={hasFavicon ? '/favicon.svg' : '/logo.svg'} />
 
     <!-- Preconnect for performance -->
     {googleAnalyticsId && <link rel="preconnect" href="https://www.googletagmanager.com" />}

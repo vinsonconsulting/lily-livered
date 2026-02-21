@@ -101,6 +101,9 @@ export const config = {
   // ◈ Social sharing image (set true if you've added public/og-image.png)
   hasOgImage: false,
 
+  // ◈ Favicon (set true if you've added public/favicon.svg)
+  hasFavicon: false,
+
   // ◈ Structured data (JSON-LD for search engines)
   enableStructuredData: true,
   organizationType: 'Organization', // 'Organization', 'LocalBusiness', 'Person'
@@ -176,6 +179,8 @@ That's a deliberate tradeoff: Observatory drops to B+, but you get off-thread an
 
 ## Optional Extras
 
+**Favicon** — Drop a `favicon.svg` (preferred) or `favicon.ico` into `public/`, then set `hasFavicon: true` in `config.js`. SVG favicons scale perfectly and support dark mode via CSS `prefers-color-scheme` media queries embedded in the SVG itself. If you have both formats, both `<link>` tags are emitted for maximum browser compatibility. Favicon tags are only emitted when you opt in — no broken icon URLs out of the box.
+
 **Social sharing image** — Create a 1200×630 `public/og-image.png` (your logo on your background color), then set `hasOgImage: true` in `config.js`. This is what shows up when someone shares your link. The image meta tags are only emitted when you opt in — no broken image URLs out of the box.
 
 ## Deploying to Cloudflare Pages
@@ -201,6 +206,7 @@ src/
     └── 404.astro        ← 404 page. Also probably leave it alone.
 public/
 ├── logo.svg             ← Replace this with your logo.
+├── favicon.svg          ← Optional. Your site icon.
 ├── robots.txt           ← Edit with your domain.
 ├── llms.txt             ← Edit with your company info.
 ├── _headers             ← Security headers for Cloudflare Pages.

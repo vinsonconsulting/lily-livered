@@ -237,9 +237,9 @@ The template is simple. The demo logo is a stress test — a 16th-century woodcu
 
 Free tier is generous (unlimited bandwidth, 500 builds/month), deploys are fast, and the edge network is global. You could deploy this to Vercel or Netlify with minimal changes, but Cloudflare Pages is the default because it's the best deal for a site that costs nothing to run.
 
-**"The 404 page loads a Google Font. Isn't that a dependency?"**
+**"The 404 page used to load a Google Font. What happened?"**
 
-It is. Bebas Neue loads from Google Fonts because it looks fantastic at 50vw and we didn't want to bundle a 40 KB font file for a page most people never see. If Google Fonts goes down, your 404 falls back to the browser's default sans-serif. The world keeps turning.
+We replaced it with a system font stack. The original used Bebas Neue from Google Fonts, which meant an external network request on an error page — the one page that should load instantly and independently. The current stack (`Impact` / `Arial Black` / system sans-serif with `text-transform: uppercase`) hits the same bold display aesthetic without any external dependency.
 
 **"Why three analytics services?"**
 

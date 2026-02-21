@@ -3,9 +3,9 @@
 
 export const config = {
   // ◈ Site Info
-  siteName: 'Acme Corporation',
-  siteDescription: 'Fine Products for Coyotes Since 1949',
-  siteUrl: 'https://acme.example.com',
+  siteName: 'Lily Livered',
+  siteDescription: 'Your email-only domains are naked. Put this up instead.',
+  siteUrl: 'https://lily-livered.jimvinson.com',
 
   // ◈ Analytics — paste your IDs, or leave '' to disable
   googleAnalyticsId: '', // e.g., 'G-XXXXXXXXXX'

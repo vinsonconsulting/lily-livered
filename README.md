@@ -196,6 +196,25 @@ That's a deliberate tradeoff: Observatory drops to B+, but you get off-thread an
 
 Every `git push` after that auto-deploys.
 
+### Custom Domain Setup
+
+After your Pages project is live on its `*.pages.dev` URL, point your domain to it:
+
+1. **In Cloudflare Dashboard:** Pages ↗ your project ↗ Custom domains ↗ Set up a custom domain
+2. **Enter your domain** (e.g., `brand.example.com` or `example.com`)
+3. **Cloudflare handles the DNS** — if your domain is already on Cloudflare DNS (and it should be), the CNAME record is added automatically
+4. **SSL is automatic** — give it a few minutes for the certificate to provision
+
+**If your domain uses a different DNS provider:** You'll need to add a CNAME record manually:
+
+| Type | Name | Target |
+| --- | --- | --- |
+| `CNAME` | `@` or subdomain | `your-project.pages.dev` |
+
+Some DNS providers don't support CNAME at the apex (`@`). In that case, either use a subdomain or transfer your DNS to Cloudflare (free plan works fine).
+
+**Email-only domains:** If you're using this template specifically for a domain that only handles email, make sure your MX records are set up *before* you add the domain to Pages. Cloudflare Pages won't interfere with existing MX records, but it's good hygiene to confirm email still works after the DNS change.
+
 ## File Map
 
 ```

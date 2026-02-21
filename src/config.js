@@ -12,9 +12,16 @@ export const config = {
   clarityProjectId: '', // e.g., 'abc123xyz'
   cloudflareAnalyticsToken: '', // e.g., 'abcd1234...'
 
-  // ◈ Colors
+  // ◈ Colors (used when colorScheme is 'dark' or when system prefers dark)
   backgroundColor: '#000000',
   textColor: '#ffffff',
+
+  // ◈ Light mode colors (used when colorScheme is 'auto' and system prefers light)
+  lightBackgroundColor: '#ffffff',
+  lightTextColor: '#000000',
+
+  // ◈ Color scheme — 'dark', 'light', or 'auto' (follows system preference)
+  colorScheme: 'dark',
 
   // ◈ Logo size — how much screen to fill
   // 'normal'  → min(92vw, 80vh) — breathing room

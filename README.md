@@ -87,6 +87,9 @@ export const config = {
   // ◈ Colors
   backgroundColor: '#000000',
   textColor: '#ffffff',
+  lightBackgroundColor: '#ffffff',  // used when colorScheme is 'auto'
+  lightTextColor: '#000000',        // used when colorScheme is 'auto'
+  colorScheme: 'dark', // 'dark' | 'light' | 'auto'
 
   // ◈ Logo size — how much screen to fill
   logoSize: 'normal', // 'normal' | 'large' | 'massive'
@@ -111,6 +114,16 @@ export const config = {
 | `'normal'` | Comfortable fit, breathing room | Most logos |
 | `'large'` | Fills most of the screen | Bold wordmarks, wide logos |
 | `'massive'` | Edge-to-edge domination | You want the logo and nothing else |
+
+### Color Scheme
+
+| Setting | What it does | When to use it |
+| --- | --- | --- |
+| `'dark'` | Always dark background | Default — most logos look best on dark |
+| `'light'` | Always light background | Light-colored logos, bright brands |
+| `'auto'` | Follows system preference | You want to play nice with OS dark mode |
+
+When set to `'auto'`, the site uses `backgroundColor`/`textColor` for dark mode and `lightBackgroundColor`/`lightTextColor` for light mode. Make sure your logo looks good on both backgrounds — or use an SVG with its own `prefers-color-scheme` media query.
 
 ## Your Logo (SVG)
 
@@ -232,6 +245,10 @@ Because it was (see credits below). We wanted to prove the template handles comp
 **"A 72 KB SVG? For a template about simplicity?"**
 
 The template is simple. The demo logo is a stress test — a 16th-century woodcut with 30,000+ coordinates, SVGO-optimized from 236 KB down to 72 KB (32 KB on the wire with compression). If it can handle this and still score in the high 80s on Performance, your logo doesn't stand a chance of slowing it down.
+
+**"Does it support dark mode / light mode?"**
+
+Yes. Set `colorScheme: 'auto'` in `config.js` and provide colors for both modes. The default is `'dark'` because most logo-only sites look better on a dark background, and changing the default would break existing deployments. If your logo works on both dark and light backgrounds, `'auto'` is the polite choice — it respects the visitor's system preference.
 
 **"Why Cloudflare Pages specifically?"**
 

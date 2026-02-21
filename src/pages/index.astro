@@ -10,6 +10,9 @@ const {
   cloudflareAnalyticsToken,
   backgroundColor,
   textColor,
+  lightBackgroundColor,
+  lightTextColor,
+  colorScheme,
   logoSize,
   fadeIn,
   fadeInDuration,
@@ -33,6 +36,19 @@ const structuredData = enableStructuredData
       url: siteUrl,
     })
   : null;
+
+// Resolve effective colors based on colorScheme
+const effectiveBg = colorScheme === 'light' ? lightBackgroundColor : backgroundColor;
+const effectiveFg = colorScheme === 'light' ? lightTextColor : textColor;
+
+const colorCss = [
+  `html, body { background-color: ${effectiveBg}; }`,
+  colorScheme === 'auto'
+    ? `@media (prefers-color-scheme: light) { html, body { background-color: ${lightBackgroundColor}; } }`
+    : '',
+]
+  .filter(Boolean)
+  .join('\n');
 ---
 
 <!doctype html>
@@ -51,7 +67,7 @@ const structuredData = enableStructuredData
     {clarityProjectId && <link rel="preconnect" href="https://www.clarity.ms" />}
 
     <!-- Theme color for mobile browsers -->
-    <meta name="theme-color" content={backgroundColor} />
+    <meta name="theme-color" content={effectiveBg} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={siteName} />
@@ -69,7 +85,10 @@ const structuredData = enableStructuredData
     <!-- Structured Data -->
     {structuredData && <script type="application/ld+json" set:html={structuredData} />}
 
-    <style define:vars={{ backgroundColor, textColor, logoWidth, fadeInDuration: `${fadeInDuration}s` }}>
+    <!-- Color scheme (set:html avoids define:vars inline specificity, allowing @media overrides) -->
+    <style set:html={colorCss} />
+
+    <style define:vars={{ logoWidth, fadeInDuration: `${fadeInDuration}s` }}>
       *, *::before, *::after {
         margin: 0;
         padding: 0;
@@ -79,7 +98,6 @@ const structuredData = enableStructuredData
       html, body {
         height: 100%;
         width: 100%;
-        background-color: var(--backgroundColor);
         overflow: hidden;
       }
 

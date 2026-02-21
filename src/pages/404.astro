@@ -1,7 +1,21 @@
 ---
 import { config } from '../config.js';
 
-const { siteName, backgroundColor, textColor } = config;
+const { siteName, backgroundColor, textColor, lightBackgroundColor, lightTextColor, colorScheme } =
+  config;
+
+// Resolve effective colors based on colorScheme
+const effectiveBg = colorScheme === 'light' ? lightBackgroundColor : backgroundColor;
+const effectiveFg = colorScheme === 'light' ? lightTextColor : textColor;
+
+const colorCss = [
+  `html, body { background-color: ${effectiveBg}; color: ${effectiveFg}; }`,
+  colorScheme === 'auto'
+    ? `@media (prefers-color-scheme: light) { html, body { background-color: ${lightBackgroundColor}; color: ${lightTextColor}; } }`
+    : '',
+]
+  .filter(Boolean)
+  .join('\n');
 ---
 
 <!doctype html>
@@ -11,8 +25,12 @@ const { siteName, backgroundColor, textColor } = config;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 - {siteName}</title>
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-    <meta name="theme-color" content={backgroundColor} />
-    <style define:vars={{ backgroundColor, textColor }}>
+    <meta name="theme-color" content={effectiveBg} />
+
+    <!-- Color scheme -->
+    <style set:html={colorCss} />
+
+    <style>
       *, *::before, *::after {
         margin: 0;
         padding: 0;
@@ -22,8 +40,6 @@ const { siteName, backgroundColor, textColor } = config;
       html, body {
         height: 100%;
         width: 100%;
-        background-color: var(--backgroundColor);
-        color: var(--textColor);
         overflow: hidden;
       }
 
@@ -63,7 +79,7 @@ const { siteName, backgroundColor, textColor } = config;
         font-family: 'Impact', 'Arial Narrow', 'Helvetica Neue Condensed', 'Arial Black', sans-serif;
         font-weight: 900;
         text-transform: uppercase;
-        color: var(--textColor);
+        color: inherit;
         text-decoration: none;
         font-size: clamp(1rem, 3vw, 2rem);
         letter-spacing: 0.15em;

@@ -1,3 +1,5 @@
+<!-- TEMPLATE: replace this entire file when forking. See README.md → "llms.txt" section. -->
+
 # Lily Livered
 
 > A one-page logo site template for domains that deserve better than a parking page.

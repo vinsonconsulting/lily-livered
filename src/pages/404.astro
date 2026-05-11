@@ -1,28 +1,10 @@
 ---
 import { config } from '../config.js';
+import { resolveColors } from '../lib/colors.js';
 
-const {
-  siteName,
-  backgroundColor,
-  textColor,
-  lightBackgroundColor,
-  lightTextColor,
-  colorScheme,
-  hasFavicon,
-} = config;
+const { siteName, hasFavicon } = config;
 
-// Resolve effective colors based on colorScheme
-const effectiveBg = colorScheme === 'light' ? lightBackgroundColor : backgroundColor;
-const effectiveFg = colorScheme === 'light' ? lightTextColor : textColor;
-
-const colorCss = [
-  `html, body { background-color: ${effectiveBg}; color: ${effectiveFg}; }`,
-  colorScheme === 'auto'
-    ? `@media (prefers-color-scheme: light) { html, body { background-color: ${lightBackgroundColor}; color: ${lightTextColor}; } }`
-    : '',
-]
-  .filter(Boolean)
-  .join('\n');
+const { effectiveBg, css: colorCss } = resolveColors(config, { applyForeground: true });
 ---
 
 <!doctype html>

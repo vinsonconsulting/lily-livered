@@ -1,0 +1,49 @@
+name: Bug report
+description: Something is broken in the template itself (not your fork's content).
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Before filing, please confirm the issue reproduces with an unmodified clone of the template — issues in your own fork's content (logo, config values, llms.txt) belong in your fork, not here.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, including what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: |
+        Numbered steps from a fresh clone. Include the exact config.js values you used if relevant.
+      placeholder: |
+        1. git clone …
+        2. npm ci
+        3. npm run build
+        4. …
+    validations:
+      required: true
+  - type: input
+    id: node-version
+    attributes:
+      label: Node version
+      description: Output of `node --version`
+      placeholder: v20.x.x
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: macOS 15.1 / Ubuntu 24.04 / Windows 11
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / output
+      description: Relevant terminal output, browser console errors, or screenshots.
+      render: shell

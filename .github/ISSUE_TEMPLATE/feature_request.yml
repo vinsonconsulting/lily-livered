@@ -1,0 +1,38 @@
+name: Feature request
+description: Suggest an improvement. Read CONTRIBUTING.md first — the scope is tight.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Heads up: this template is intentionally minimal. Features that push it toward "starter for a real website" are out of scope (see [CONTRIBUTING.md](../CONTRIBUTING.md)). If your idea can be driven from `src/config.js`, you're in the right place.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: Describe the use case, not the solution yet.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: How would this work? Would it require a new config field? A new file? Anything that bloats `config.js` needs strong justification.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What workarounds did you try? Why didn't they work?
+  - type: checkboxes
+    id: scope-check
+    attributes:
+      label: Scope check
+      options:
+        - label: This can be driven from `src/config.js` (or doesn't need to be).
+          required: false
+        - label: This doesn't require a new runtime dependency.
+          required: false
+        - label: This won't regress Lighthouse scores.
+          required: false

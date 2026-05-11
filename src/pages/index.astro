@@ -1,5 +1,6 @@
 ---
 import { config } from '../config.js';
+import { resolveColors } from '../lib/colors.js';
 
 const {
   siteName,
@@ -8,11 +9,6 @@ const {
   googleAnalyticsId,
   clarityProjectId,
   cloudflareAnalyticsToken,
-  backgroundColor,
-  textColor,
-  lightBackgroundColor,
-  lightTextColor,
-  colorScheme,
   logoSize,
   fadeIn,
   fadeInDuration,
@@ -22,12 +18,14 @@ const {
   organizationType,
 } = config;
 
+/** @type {Record<'normal' | 'large' | 'massive', string>} */
 const logoSizes = {
   normal: 'min(92vw, 80vh)',
   large: 'min(95vw, 90vh)',
   massive: 'min(98vw, 95vh)',
 };
-const logoWidth = logoSizes[logoSize] || logoSizes.normal;
+const logoWidth =
+  logoSize === 'large' || logoSize === 'massive' ? logoSizes[logoSize] : logoSizes.normal;
 
 const structuredData = enableStructuredData
   ? JSON.stringify({
@@ -38,18 +36,11 @@ const structuredData = enableStructuredData
     })
   : null;
 
-// Resolve effective colors based on colorScheme
-const effectiveBg = colorScheme === 'light' ? lightBackgroundColor : backgroundColor;
-const effectiveFg = colorScheme === 'light' ? lightTextColor : textColor;
+const { effectiveBg, css: colorCss } = resolveColors(config);
 
-const colorCss = [
-  `html, body { background-color: ${effectiveBg}; }`,
-  colorScheme === 'auto'
-    ? `@media (prefers-color-scheme: light) { html, body { background-color: ${lightBackgroundColor}; } }`
-    : '',
-]
-  .filter(Boolean)
-  .join('\n');
+const cfBeaconData = cloudflareAnalyticsToken
+  ? JSON.stringify({ token: cloudflareAnalyticsToken })
+  : null;
 ---
 
 <!doctype html>
@@ -193,11 +184,11 @@ const colorCss = [
     </main>
 
     <!-- Cloudflare Web Analytics -->
-    {cloudflareAnalyticsToken && (
+    {cfBeaconData && (
       <script
         defer
         src='https://static.cloudflareinsights.com/beacon.min.js'
-        data-cf-beacon={`{"token": "${cloudflareAnalyticsToken}"}`}
+        data-cf-beacon={cfBeaconData}
       />
     )}
   </body>

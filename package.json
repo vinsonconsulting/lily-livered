@@ -1,13 +1,39 @@
 {
   "name": "lily-livered",
-  "type": "module",
   "version": "1.0.0",
+  "description": "One-page logo site template for domains that deserve better than a parking page. Astro 5 + Cloudflare Pages, edit one config file.",
+  "keywords": [
+    "astro",
+    "template",
+    "cloudflare-pages",
+    "logo",
+    "landing-page",
+    "static-site",
+    "partytown"
+  ],
+  "homepage": "https://lily-livered.jimvinson.com",
+  "bugs": {
+    "url": "https://github.com/vinsonconsulting/lily-livered/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinsonconsulting/lily-livered.git"
+  },
+  "license": "MIT",
+  "author": "Jim Vinson (https://jimvinson.com)",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "check": "biome check .",
-    "check:fix": "biome check --write ."
+    "check:fix": "biome check --write .",
+    "check:astro": "astro check",
+    "format": "biome format .",
+    "format:fix": "biome format --write ."
   },
   "dependencies": {
     "@astrojs/partytown": "^2.1.2",
@@ -15,6 +41,8 @@
     "astro": "^5.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.3"
+    "@astrojs/check": "^0.9.0",
+    "@biomejs/biome": "^2.4.3",
+    "typescript": "^5.6.0"
   }
 }

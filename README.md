@@ -250,7 +250,7 @@ npm run format:fix   # Apply Biome formatting
 
 ## What's Under the Hood
 
-- **Astro 5** — static site generator, zero client JS by default
+- **Astro 6** — static site generator, zero client JS by default
 - **Partytown** — runs analytics scripts off the main thread (loaded only when analytics are configured)
 - **Cloudflare Pages** — edge deployment, free tier is generous
 - **Biome** — linting and formatting in one Rust binary

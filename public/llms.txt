@@ -7,7 +7,7 @@
 ## About
 
 Lily Livered is an open-source template for putting a logo on a domain that
-doesn't have (or need) a full website. Built with Astro 5, deployed on
+doesn't have (or need) a full website. Built with Astro 6, deployed on
 Cloudflare Pages.
 
 Replace this file with your own company info when you use the template.
@@ -21,7 +21,7 @@ Replace this file with your own company info when you use the template.
 
 ## Technical Details
 
-- Framework: Astro 5 (static site generator)
+- Framework: Astro 6 (static site generator)
 - Hosting: Cloudflare Pages (edge deployment)
 - Analytics: off-thread via Partytown
 - Template source: https://github.com/vinsonconsulting/lily-livered

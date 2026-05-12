@@ -36,8 +36,9 @@ export const config = {
   // ◈ Social sharing image (set true if you've added public/og-image.png)
   hasOgImage: false,
 
-  // ◈ Favicon (set true if you've added public/favicon.svg)
-  hasFavicon: false,
+  // ◈ Favicon — set true once you've added public/favicon.svg.
+  // The favicon link is only emitted when this is true (no fallback to the logo).
+  hasFavicon: true,
 
   // ◈ Structured data (JSON-LD for search engines)
   enableStructuredData: true,

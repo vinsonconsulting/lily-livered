@@ -1,6 +1,6 @@
 {
   "name": "lily-livered",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "One-page logo site template for domains that deserve better than a parking page. Astro 5 + Cloudflare Pages, edit one config file.",
   "keywords": [
     "astro",

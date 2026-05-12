@@ -34,6 +34,7 @@ Lily Livered is a one-page logo site for domains that deserve better than nothin
 **What you get:**
 - Lighthouse 100 on Accessibility, Best Practices, and SEO — Performance scales with your logo complexity
 - A fun resizable logo that looks good on everything from a phone to a projector — playing with the three size settings counts as an interactive feature
+- **Inline-rendered SVG logo** so it's not casually right-click-downloadable — see [About the logo and "protection"](#about-the-logo-and-protection) below for the honest version of what that does and doesn't mean
 - Three tiers of site metrics and visitor tracking to keep tabs on that baseline traffic flow
 - `robots.txt` and `llms.txt` so you can tell the cool kids what's going on
 - A 404 page, because even a single-page site needs to handle disappointment gracefully
@@ -52,8 +53,8 @@ npm ci
 
 Then do two things:
 
-1. **Drop your logo** into `public/logo.svg`
-2. **Edit `src/config.js`** with your details (see below) — `robots.txt` and the sitemap are generated from your `siteUrl` at build time. Also replace `public/llms.txt` with your own content.
+1. **Drop your logo** into `src/assets/logo.svg` (it gets inlined into the page at build time — there's no `/logo.svg` URL on the deployed site)
+2. **Edit `src/config.js`** with your details (see below) — `robots.txt` and the sitemap are generated from your `siteUrl` at build time. Also replace `public/llms.txt` with your own content, and replace `public/favicon.svg` with your own brand mark (or delete it and set `hasFavicon: false`).
 
 Preview it:
 
@@ -129,14 +130,28 @@ When set to `'auto'`, the site uses `backgroundColor`/`textColor` for dark mode 
 
 ## Your Logo (SVG)
 
-Replace `public/logo.svg` with yours. A few ground rules:
+Replace `src/assets/logo.svg` with yours. The logo lives under `src/` (not `public/`) so Astro can inline it into the HTML at build time — there's no separate `/logo.svg` URL served to visitors. See [About the logo and "protection"](#about-the-logo-and-protection) for the reasoning.
+
+A few ground rules:
 
 - **Convert text to outlines** — no font dependency headaches
 - **Center it in the viewBox** — if it looks off-center on the page, it's off-center in the file
 - **White or light colors** — dark background is the default
-- **Run it through [SVGO](https://jakearchibald.github.io/svgomg/)** — smaller file, faster load
+- **Run it through [SVGO](https://jakearchibald.github.io/svgomg/)** — smaller file, faster page (and smaller inlined HTML)
 
 If your logo looks weirdly positioned: open it in Illustrator/Figma/Inkscape, select all, center on artboard, re-export.
+
+### About the logo and "protection"
+
+The hero logo is **inlined** directly into the page HTML via [Astro's native SVG component import](https://docs.astro.build/en/guides/images/) — it's not served as a separate file. That intentionally breaks the easy download paths:
+
+- Right-click → "Save Image As…" doesn't appear (no `<img>` element, plus the context menu is suppressed)
+- Drag-to-desktop doesn't produce a draggable image (`draggable="false"` + `user-drag: none`)
+- `https://yoursite.com/logo.svg` returns 404 — the URL simply doesn't exist
+
+**This is friction, not protection.** A determined user can View Source, copy the inline `<svg>` markup out of the HTML, or screenshot the rendered page. There's no way to stop that, and we don't pretend otherwise. The goal here is to deter casual saves — the average visitor won't bother — not to make the logo unreachable.
+
+If you actively *want* the logo to be downloadable (e.g., for press/brand-asset purposes), the simplest path is to also drop a copy at `public/logo.svg` so it's served alongside the inlined version. You'll lose the friction but gain the download.
 
 ## robots.txt
 
@@ -178,7 +193,7 @@ That's a deliberate tradeoff: Observatory drops to B+, but you get off-thread an
 
 ## Optional Extras
 
-**Favicon** — Drop a `favicon.svg` (preferred) or `favicon.ico` into `public/`, then set `hasFavicon: true` in `config.js`. SVG favicons scale perfectly and support dark mode via CSS `prefers-color-scheme` media queries embedded in the SVG itself. If you have both formats, both `<link>` tags are emitted for maximum browser compatibility. Favicon tags are only emitted when you opt in — no broken icon URLs out of the box.
+**Favicon** — The template ships with a placeholder `public/favicon.svg` and `hasFavicon: true` in `config.js`. Replace the file with your own brand mark, or delete the file and set `hasFavicon: false` to ship without one. The `<link rel="icon">` tag is only emitted when `hasFavicon: true`, so there's no broken icon request either way. SVG favicons scale perfectly and support dark mode via CSS `prefers-color-scheme` media queries embedded in the SVG itself. **Note**: in v1 the favicon fell back to `/logo.svg` when no favicon was provided; v2 removed that fallback because the logo is now inlined and has no public URL.
 
 **Social sharing image** — Create a 1200×630 `public/og-image.png` (your logo on your background color), then set `hasOgImage: true` in `config.js`. This is what shows up when someone shares your link. The image meta tags are only emitted when you opt in — no broken image URLs out of the box.
 
@@ -219,6 +234,8 @@ Some DNS providers don't support CNAME at the apex (`@`). In that case, either u
 ```
 src/
 ├── config.js            ← Edit this. All your settings.
+├── assets/
+│   └── logo.svg         ← Replace this with your logo. Inlined into HTML at build time.
 ├── lib/
 │   └── colors.js        ← Shared color-scheme helper. Leave alone.
 └── pages/
@@ -226,8 +243,7 @@ src/
     ├── 404.astro        ← 404 page. Also probably leave it alone.
     └── robots.txt.js    ← Generates robots.txt from config.siteUrl.
 public/
-├── logo.svg             ← Replace this with your logo.
-├── favicon.svg          ← Optional. Your site icon.
+├── favicon.svg          ← Replace with your brand mark (or delete + set hasFavicon: false).
 ├── llms.txt             ← Edit with your company info.
 ├── _headers             ← Security headers for Cloudflare Pages.
 └── og-image.png         ← Optional. For social media previews.
@@ -247,6 +263,15 @@ npm run check:astro  # Astro diagnostics (.astro template errors)
 npm run format       # Format check only (no lint)
 npm run format:fix   # Apply Biome formatting
 ```
+
+## Upgrading from v1 to v2
+
+If you forked this template before v2.0.0, a few things changed:
+
+- **Logo moves**: `public/logo.svg` → `src/assets/logo.svg`. The build will fail with an Astro import error until you move it.
+- **Node 22.12+ required**: v2 follows Astro 6, which dropped Node 18 and 20. Bump your Cloudflare Pages `NODE_VERSION` env var to `22` if it isn't already.
+- **Favicon doesn't fall back to the logo**: in v1, `hasFavicon: false` made the favicon point at `/logo.svg`. In v2 there's no `/logo.svg` URL, so the favicon `<link>` is only emitted when `hasFavicon: true`. The template ships with a placeholder `public/favicon.svg` and the flag set to `true` — replace the file or flip the flag.
+- **`public/robots.txt` was removed** (earlier in v1.0.x → v2 sequence): it's now generated dynamically from `config.siteUrl` via [`src/pages/robots.txt.js`](src/pages/robots.txt.js). If you customized the old static file, port your customizations into the endpoint.
 
 ## What's Under the Hood
 

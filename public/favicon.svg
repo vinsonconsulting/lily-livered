@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Default favicon for the Lily Livered template.
+  Replace with your own brand mark — keep it simple at 16×16/32×32.
+  Uses currentColor so it adapts to <meta name="theme-color"> changes.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="currentColor" />
+  <path
+    d="M20 18 L20 46 M20 46 L44 46"
+    stroke="#000"
+    stroke-width="6"
+    stroke-linecap="square"
+    fill="none"
+  />
+</svg>

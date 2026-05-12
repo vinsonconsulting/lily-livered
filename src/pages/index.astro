@@ -1,4 +1,8 @@
 ---
+// `?raw` returns the SVG file contents as a string and tells Vite NOT to emit
+// it as a separate asset under dist/_astro/ — so the only place the SVG exists
+// on the deployed site is inside index.html.
+import logoSvg from '../assets/logo.svg?raw';
 import { config } from '../config.js';
 import { resolveColors } from '../lib/colors.js';
 
@@ -41,6 +45,16 @@ const { effectiveBg, css: colorCss } = resolveColors(config);
 const cfBeaconData = cloudflareAnalyticsToken
   ? JSON.stringify({ token: cloudflareAnalyticsToken })
   : null;
+
+// Inject class + a11y attributes onto the inline <svg> root before it's set:html'd.
+// Escaping the aria-label avoids breaking the attribute if siteName contains a quote.
+const svgClass = ['logo', fadeIn ? 'animate' : null].filter(Boolean).join(' ');
+const ariaLabel = siteName.replace(/"/g, '&quot;');
+// Match the first <svg> tag (the file may start with an XML/HTML comment).
+const logoMarkup = logoSvg.replace(
+  /<svg\b/,
+  `<svg class="${svgClass}" role="img" aria-label="${ariaLabel}"`,
+);
 ---
 
 <!doctype html>
@@ -51,8 +65,8 @@ const cfBeaconData = cloudflareAnalyticsToken
     <meta name="description" content={siteDescription} />
     <title>{siteName}</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href={hasFavicon ? '/favicon.svg' : '/logo.svg'} />
+    <!-- Favicon (only emitted when hasFavicon is true — there is no logo fallback) -->
+    {hasFavicon && <link rel="icon" type="image/svg+xml" href="/favicon.svg" />}
 
     <!-- Preconnect for performance -->
     {googleAnalyticsId && <link rel="preconnect" href="https://www.googletagmanager.com" />}
@@ -113,6 +127,11 @@ const cfBeaconData = cloudflareAnalyticsToken
         height: auto;
         max-height: 85vh;
         object-fit: contain;
+        /* Make it harder to grab the logo — friction, not protection. */
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-user-drag: none;
+        pointer-events: none;
       }
 
       .logo.animate {
@@ -173,14 +192,8 @@ const cfBeaconData = cloudflareAnalyticsToken
   </head>
 
   <body>
-    <main class="logo-container">
-      <img
-        src="/logo.svg"
-        alt={siteName}
-        class:list={['logo', { animate: fadeIn }]}
-        loading="eager"
-        decoding="async"
-      />
+    <main class="logo-container" draggable="false" oncontextmenu="return false">
+      <Fragment set:html={logoMarkup} />
     </main>
 
     <!-- Cloudflare Web Analytics -->

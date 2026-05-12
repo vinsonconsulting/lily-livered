@@ -22,13 +22,15 @@ const {
   organizationType,
 } = config;
 
-/** @type {Record<'normal' | 'large' | 'massive', string>} */
+// Size presets: vw cap and vh cap. The browser picks the largest box that
+// fits within both via `max-width: <vw>vw; max-height: <vh>vh; aspect-ratio: …`.
+/** @type {Record<'normal' | 'large' | 'massive', { vw: number, vh: number }>} */
 const logoSizes = {
-  normal: 'min(92vw, 80vh)',
-  large: 'min(95vw, 90vh)',
-  massive: 'min(98vw, 95vh)',
+  normal: { vw: 92, vh: 80 },
+  large: { vw: 95, vh: 90 },
+  massive: { vw: 98, vh: 95 },
 };
-const logoWidth =
+const { vw: logoVw, vh: logoVh } =
   logoSize === 'large' || logoSize === 'massive' ? logoSizes[logoSize] : logoSizes.normal;
 
 const structuredData = enableStructuredData
@@ -45,6 +47,18 @@ const { effectiveBg, css: colorCss } = resolveColors(config);
 const cfBeaconData = cloudflareAnalyticsToken
   ? JSON.stringify({ token: cloudflareAnalyticsToken })
   : null;
+
+// Parse the SVG's viewBox so the wrapper div can use the *real* aspect ratio
+// via CSS aspect-ratio. Falls back to 1/1 if no viewBox is found (which would
+// indicate a malformed SVG, but render gracefully anyway).
+const vbMatch = logoSvg.match(/viewBox\s*=\s*["']([\d.\s+-]+)["']/);
+let logoAspect = '1 / 1';
+if (vbMatch) {
+  const parts = vbMatch[1].trim().split(/\s+/);
+  if (parts.length === 4 && Number(parts[2]) > 0 && Number(parts[3]) > 0) {
+    logoAspect = `${parts[2]} / ${parts[3]}`;
+  }
+}
 
 // Inject class + a11y attributes onto the inline <svg> root before it's set:html'd.
 // Escaping the aria-label avoids breaking the attribute if siteName contains a quote.
@@ -94,7 +108,14 @@ const logoMarkup = logoSvg.replace(
     <!-- Color scheme (set:html avoids define:vars inline specificity, allowing @media overrides) -->
     <style set:html={colorCss} />
 
-    <style define:vars={{ logoWidth, fadeInDuration: `${fadeInDuration}s` }}>
+    <style
+      define:vars={{
+        logoVw: `${logoVw}vw`,
+        logoVh: `${logoVh}vh`,
+        logoAspect,
+        fadeInDuration: `${fadeInDuration}s`,
+      }}
+    >
       *, *::before, *::after {
         margin: 0;
         padding: 0;
@@ -122,27 +143,33 @@ const logoMarkup = logoSvg.replace(
         padding: clamp(0.5rem, 2vmin, 1.5rem);
       }
 
-      .logo {
-        /*
-         * Inline <svg> sizing on flex children is unreliable with
-         * `height: auto` — Chromium, WebKit, and Gecko have all shipped
-         * different interpretations of "auto height from viewBox" over
-         * the years. Set BOTH dimensions explicitly; the SVG's own
-         * preserveAspectRatio (default xMidYMid meet) fits the actual
-         * artwork within this box while preserving its aspect ratio.
-         *
-         * The box is square at var(--logoWidth), which is itself a
-         * min(vw, vh) expression, so it stays responsive on resize.
-         * min-width/height: 0 defeats the flex-item intrinsic-size
-         * floor that would otherwise let the SVG's viewBox px values
-         * override max-height: 85vh.
-         */
-        width: var(--logoWidth);
-        height: var(--logoWidth);
-        max-width: 100%;
-        max-height: 85vh;
+      /*
+       * Inline <svg> as a flex child is famously inconsistent across browsers:
+       * Chrome/Firefox treat it as 0×0 minimum sizing while Edge/Safari use
+       * the viewBox intrinsic size, so simple `width: …; height: auto` rules
+       * either don't resize or overflow the viewport. The robust fix is to
+       * size a wrapper <div> (a normal block element with deterministic
+       * sizing) and let the SVG fill 100%/100% inside.
+       *
+       * The wrapper uses CSS aspect-ratio set to the actual SVG viewBox ratio,
+       * so the box keeps the logo's true proportions. max-width and max-height
+       * cap both dimensions independently; the browser resolves to the largest
+       * box that satisfies all three constraints.
+       */
+      .logo-frame {
+        width: 100%;
+        max-width: var(--logoVw);
+        max-height: var(--logoVh);
+        aspect-ratio: var(--logoAspect);
         min-width: 0;
         min-height: 0;
+        overflow: hidden;
+      }
+
+      .logo {
+        display: block;
+        width: 100%;
+        height: 100%;
         /* Make it harder to grab the logo — friction, not protection. */
         user-select: none;
         -webkit-user-select: none;
@@ -209,7 +236,9 @@ const logoMarkup = logoSvg.replace(
 
   <body>
     <main class="logo-container" draggable="false" oncontextmenu="return false">
-      <Fragment set:html={logoMarkup} />
+      <div class="logo-frame">
+        <Fragment set:html={logoMarkup} />
+      </div>
     </main>
 
     <!-- Cloudflare Web Analytics -->

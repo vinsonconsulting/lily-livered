@@ -123,16 +123,24 @@ const logoMarkup = logoSvg.replace(
       }
 
       .logo {
+        /*
+         * Inline <svg> sizing on flex children is unreliable with
+         * `height: auto` — Chromium, WebKit, and Gecko have all shipped
+         * different interpretations of "auto height from viewBox" over
+         * the years. Set BOTH dimensions explicitly; the SVG's own
+         * preserveAspectRatio (default xMidYMid meet) fits the actual
+         * artwork within this box while preserving its aspect ratio.
+         *
+         * The box is square at var(--logoWidth), which is itself a
+         * min(vw, vh) expression, so it stays responsive on resize.
+         * min-width/height: 0 defeats the flex-item intrinsic-size
+         * floor that would otherwise let the SVG's viewBox px values
+         * override max-height: 85vh.
+         */
         width: var(--logoWidth);
-        height: auto;
+        height: var(--logoWidth);
         max-width: 100%;
         max-height: 85vh;
-        /*
-         * Inline <svg> is a non-replaced element with intrinsic dimensions
-         * (the viewBox). As a flex child of .logo-container, the default
-         * min-width/min-height: auto would resolve to the viewBox size in
-         * px and prevent shrink. Zero them out so width/max-height win.
-         */
         min-width: 0;
         min-height: 0;
         /* Make it harder to grab the logo — friction, not protection. */

@@ -125,8 +125,16 @@ const logoMarkup = logoSvg.replace(
       .logo {
         width: var(--logoWidth);
         height: auto;
+        max-width: 100%;
         max-height: 85vh;
-        object-fit: contain;
+        /*
+         * Inline <svg> is a non-replaced element with intrinsic dimensions
+         * (the viewBox). As a flex child of .logo-container, the default
+         * min-width/min-height: auto would resolve to the viewBox size in
+         * px and prevent shrink. Zero them out so width/max-height win.
+         */
+        min-width: 0;
+        min-height: 0;
         /* Make it harder to grab the logo — friction, not protection. */
         user-select: none;
         -webkit-user-select: none;

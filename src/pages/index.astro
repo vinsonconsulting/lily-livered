@@ -48,17 +48,21 @@ const cfBeaconData = cloudflareAnalyticsToken
   ? JSON.stringify({ token: cloudflareAnalyticsToken })
   : null;
 
-// Parse the SVG's viewBox so the wrapper div can use the *real* aspect ratio
-// via CSS aspect-ratio. Falls back to 1/1 if no viewBox is found (which would
-// indicate a malformed SVG, but render gracefully anyway).
+// Parse the SVG's viewBox so the wrapper div can size itself to the *real*
+// aspect ratio. We emit three CSS custom properties: the width/height numbers
+// (unitless, for calc math) and a `W / H` string for the aspect-ratio property.
+// Falls back to 1×1 if no viewBox is found.
 const vbMatch = logoSvg.match(/viewBox\s*=\s*["']([\d.\s+-]+)["']/);
-let logoAspect = '1 / 1';
+let logoAspectW = 1;
+let logoAspectH = 1;
 if (vbMatch) {
   const parts = vbMatch[1].trim().split(/\s+/);
   if (parts.length === 4 && Number(parts[2]) > 0 && Number(parts[3]) > 0) {
-    logoAspect = `${parts[2]} / ${parts[3]}`;
+    logoAspectW = Number(parts[2]);
+    logoAspectH = Number(parts[3]);
   }
 }
+const logoAspect = `${logoAspectW} / ${logoAspectH}`;
 
 // Inject class + a11y attributes onto the inline <svg> root before it's set:html'd.
 // Escaping the aria-label avoids breaking the attribute if siteName contains a quote.
@@ -113,6 +117,8 @@ const logoMarkup = logoSvg.replace(
         logoVw: `${logoVw}vw`,
         logoVh: `${logoVh}vh`,
         logoAspect,
+        logoAspectW,
+        logoAspectH,
         fadeInDuration: `${fadeInDuration}s`,
       }}
     >
@@ -144,22 +150,27 @@ const logoMarkup = logoSvg.replace(
       }
 
       /*
-       * Inline <svg> as a flex child is famously inconsistent across browsers:
-       * Chrome/Firefox treat it as 0×0 minimum sizing while Edge/Safari use
-       * the viewBox intrinsic size, so simple `width: …; height: auto` rules
-       * either don't resize or overflow the viewport. The robust fix is to
-       * size a wrapper <div> (a normal block element with deterministic
-       * sizing) and let the SVG fill 100%/100% inside.
+       * Inline <svg> as a flex child is famously inconsistent across browsers
+       * (Chrome/Firefox treat it as 0×0 min, Edge/Safari use viewBox intrinsic
+       * min), so we wrap it in a normal <div> that takes the responsive
+       * sizing. The SVG fills the wrapper at 100%/100% — no flex-child
+       * sizing quirks.
        *
-       * The wrapper uses CSS aspect-ratio set to the actual SVG viewBox ratio,
-       * so the box keeps the logo's true proportions. max-width and max-height
-       * cap both dimensions independently; the browser resolves to the largest
-       * box that satisfies all three constraints.
+       * Width is computed explicitly as `min(vw cap, vh cap × aspect)`:
+       *   - var(--logoVw) is the vw cap (e.g. 92vw)
+       *   - calc(var(--logoVh) * var(--logoAspectW) / var(--logoAspectH))
+       *     is the width that would yield a height equal to the vh cap
+       *   - min() takes whichever is smaller for the current viewport
+       *
+       * This guarantees the box never exceeds either viewport cap, regardless
+       * of browser quirks with `aspect-ratio` + `max-height`. The aspect-ratio
+       * property then derives the matching height from this width.
        */
       .logo-frame {
-        width: 100%;
-        max-width: var(--logoVw);
-        max-height: var(--logoVh);
+        width: min(
+          var(--logoVw),
+          calc(var(--logoVh) * var(--logoAspectW) / var(--logoAspectH))
+        );
         aspect-ratio: var(--logoAspect);
         min-width: 0;
         min-height: 0;

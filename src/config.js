@@ -7,7 +7,7 @@ export const config = {
   siteDescription: 'Your email-only domains are naked. Put this up instead.',
   siteUrl: 'https://lily-livered.jimvinson.com',
 
-  // ◈ Analytics — paste your IDs, or leave '' to disable
+  // ◈ Analytics. Paste your IDs, or leave '' to disable.
   googleAnalyticsId: '', // e.g., 'G-XXXXXXXXXX'
   clarityProjectId: '', // e.g., 'abc123xyz'
   cloudflareAnalyticsToken: '', // e.g., 'abcd1234...'
@@ -20,13 +20,13 @@ export const config = {
   lightBackgroundColor: '#ffffff',
   lightTextColor: '#000000',
 
-  // ◈ Color scheme — 'dark', 'light', or 'auto' (follows system preference)
+  // ◈ Color scheme. 'dark', 'light', or 'auto' (follows system preference).
   colorScheme: 'dark',
 
-  // ◈ Logo size — how much screen to fill
-  // 'normal'  → min(92vw, 80vh) — breathing room
-  // 'large'   → min(95vw, 90vh) — fills the viewport
-  // 'massive' → min(98vw, 95vh) — edge-to-edge
+  // ◈ Logo size. How much screen to fill.
+  // 'normal'  → min(92vw, 80vh): breathing room
+  // 'large'   → min(95vw, 90vh): fills the viewport
+  // 'massive' → min(98vw, 95vh): edge-to-edge
   logoSize: 'normal',
 
   // ◈ Fade-in animation
@@ -36,7 +36,7 @@ export const config = {
   // ◈ Social sharing image (set true if you've added public/og-image.png)
   hasOgImage: false,
 
-  // ◈ Favicon — set true once you've added public/favicon.svg.
+  // ◈ Favicon. Set true once you've added public/favicon.svg.
   // The favicon link is only emitted when this is true (no fallback to the logo).
   hasFavicon: true,
 
